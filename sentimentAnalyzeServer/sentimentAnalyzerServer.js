@@ -12,14 +12,14 @@ app.use(cors_app());
 /*Uncomment the following lines to loan the environment 
 variables that you set up in the .env file*/
 
-// const dotenv = require('dotenv');
-// dotenv.config();
+const dotenv = require('dotenv');
+dotenv.config();
 
- const api_key = process.env.API_KEY;
+const api_key = process.env.API_KEY;
 const api_url = process.env.API_URL;
 
 function getNLUInstance() {
-    const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+       const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
     const { IamAuthenticator } = require('ibm-watson/auth');
 
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
@@ -32,10 +32,14 @@ function getNLUInstance() {
     return naturalLanguageUnderstanding;
 }
 
+
 //The default endpoint for the webserver
 app.get("/",(req,res)=>{
     res.render('index.html');
   });
+
+
+
 
 //The endpoint for the webserver ending with /url/emotion
 app.get("/url/emotion", (req,res) => {
@@ -62,6 +66,9 @@ app.get("/url/emotion", (req,res) => {
         return res.send("Could not do desired operation "+err);
     });
 });
+
+
+
 
 //The endpoint for the webserver ending with /url/sentiment
 app.get("/url/sentiment", (req,res) => {
@@ -92,6 +99,8 @@ app.get("/url/sentiment", (req,res) => {
 
 
 
+
+
 //The endpoint for the webserver ending with /text/emotion
 app.get("/text/emotion", (req,res) => {
     let textToAnalyze = req.query.text
@@ -118,6 +127,10 @@ app.get("/text/emotion", (req,res) => {
         return res.send("Could not do desired operation "+err);
     });
 });
+
+
+
+
 
 app.get("/text/sentiment", (req,res) => {
     let textToAnalyze = req.query.text
@@ -148,3 +161,4 @@ app.get("/text/sentiment", (req,res) => {
 let server = app.listen(8080, () => {
     console.log('Listening', server.address().port)
 })
+
